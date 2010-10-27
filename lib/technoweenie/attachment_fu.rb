@@ -83,7 +83,7 @@ module Technoweenie # :nodoc:
         options[:thumbnail_class]  ||= self
         options[:s3_access]        ||= :public_read
         options[:cloudfront]       ||= false
-        options[:content_type] = [options[:content_type]].flatten.collect! { |t| t == :image ? Technoweenie::AttachmentFu.content_types : t }.flatten unless options[:content_type].nil?
+        options[:content_type]       = [options[:content_type]].flatten.collect! { |t| t == :image ? Technoweenie::AttachmentFu.content_types : t }.flatten unless options[:content_type].nil?
 
         unless options[:thumbnails].is_a?(Hash)
           raise ArgumentError, ":thumbnails option should be a hash: e.g. :thumbnails => { :foo => '50x50' }"
@@ -103,9 +103,8 @@ module Technoweenie # :nodoc:
         attachment_options[:path_prefix] ||= attachment_options[:file_system_path]
         if attachment_options[:path_prefix].nil?
           attachment_options[:path_prefix] = case attachment_options[:storage]
-            when :s3 then table_name
-            when :cloud_files then table_name
-            else File.join("public", table_name)
+            when :s3, :cloud_files, :ssh then table_name
+            else                              File.join("public", table_name)
           end
         end
         attachment_options[:path_prefix]   = attachment_options[:path_prefix][1..-1] if options[:path_prefix].first == '/'

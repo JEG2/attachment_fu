@@ -1,3 +1,6 @@
+* Oct 27 2010 *
+* Added an SSH/SCP backend for managing a remote media server [James Edward Gray II]
+
 * Apr 17 2008 *
 * amazon_s3.yml is now passed through ERB before being passed to AWS::S3 [François Beausoleil]
 

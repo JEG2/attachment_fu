@@ -224,3 +224,10 @@ begin
 rescue
   puts "S3 error: #{$!}"
 end
+
+
+
+class SshAttachment < ActiveRecord::Base
+  has_attachment :storage => :ssh
+  validates_as_attachment
+end
