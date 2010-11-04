@@ -136,7 +136,10 @@ module Technoweenie # :nodoc:
           def destroy_file
             start_ssh do |ssh|
               ssh.exec!("rm #{e full_filename}")
-              ssh.exec!("rm -r #{e File.dirname(File.dirname(full_filename))}")
+              dir = File.dirname(full_filename)
+              ssh.exec!("find #{e dir} -maxdepth 0 -empty -exec rm -r {} \\;")
+              dir = File.dirname(dir)
+              ssh.exec!("find #{e dir} -maxdepth 0 -empty -exec rm -r {} \\;")
             end
           end
           
